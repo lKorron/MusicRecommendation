@@ -1,0 +1,61 @@
+The models lay here:
+/Users/grigorijnikitin/.cache/huggingface/hub
+
+
+inference code
+# prompt = "say hi"
+
+# input_ids = tokenizer(
+#     prompt, return_tensors="pt").input_ids
+
+# outputs = model.generate(input_ids, max_length=20)
+# out = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+
+train settings
+# learning_rate = 3e-4
+# optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+
+
+# def train(model, optimizer, input, target):
+#     model.train()
+#     optimizer.zero_grad()
+
+#     loss = model(input_ids=input, labels=target).loss
+#     loss.backward()
+#     optimizer.step()
+
+#     return loss.item()
+
+
+# print(loss.item())
+
+# print(train(model, optimizer, input_ids, labels))
+# print(train(model, optimizer, input_ids, labels))
+# print(train(model, optimizer, input_ids, labels))
+
+
+
+Old datA
+# if tokenizer.pad_token is None:
+#     tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+
+
+# input_list = ["I want a rock", "I want a pop", "I want a moody"]
+# labels_list = ["Metallica", "Take on me", "Old me is dead"]
+
+# task_prefix = "answer"
+
+# input = tokenizer(
+#     [task_prefix + seq for seq in input_list], return_tensors="pt", padding=True)
+
+# labels = tokenizer(labels_list, return_tensors="pt",
+#                    padding=True)
+
+# labels.input_ids[labels.input_ids == tokenizer.pad_token_id] = -100
+
+# batch_size, tokens
+
+# the forward function automatically creates the correct decoder_input_ids
+# loss = model(input_ids=input.input_ids,
+#              attention_mask=input.attention_mask, labels=labels.input_ids).loss
