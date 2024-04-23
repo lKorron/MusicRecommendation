@@ -9,6 +9,9 @@ tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pile-t5-base")
 if tokenizer.pad_token is None:
     tokenizer.add_special_tokens({"pad_token": "[PAD]"})
 
+if tokenizer.eos_token is None:
+    tokenizer.add_special_tokens({"eos_token": "</s>"})
+
 task_prefix = "answer"
 
 
@@ -33,15 +36,16 @@ def tokenize_function(examples):
 
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
+print(tokenized_dataset)
 
 
-peft_config = LoraConfig(task_type="SEQ_2_SEQ_LM", r=8,
+peft_config = LoraConfig(task_type="SEQ_2_SEQ_LM", r=2,
                          lora_alpha=32, target_modules=["q", "v"], lora_dropout=0.01)
 
 lora_model = get_peft_model(model, peft_config)
 
 lr = 3e-4
-batch_size = 3
+batch_size = 2
 num_epochs = 2
 
 training_args = TrainingArguments(

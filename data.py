@@ -9,8 +9,6 @@ if tokenizer.pad_token is None:
     tokenizer.add_special_tokens({"pad_token": "[PAD]"})
 
 task_prefix = "answer"
-
-
 def tokenize_function(examples):
     input_text = ["question: " + q + " answer: " + a for q,
                   a in zip(examples['Question'], examples['Answer'])]
@@ -33,7 +31,7 @@ def tokenize_function(examples):
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
 
-
+print(tokenized_dataset)
 def get_tokenized_dataset():
     tokenized_dataset = dataset.map(tokenize_function, batched=True)
     print(tokenized_dataset)
