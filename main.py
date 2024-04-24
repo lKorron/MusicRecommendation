@@ -88,4 +88,4 @@ print(tokenizer.decode(output[0], skip_special_tokens=True))
 
 
 if input("Save model? y/n") == 'y':
-    trainer.save_model("./models")
+    trainer.save_model("./models/model")
