@@ -44,6 +44,7 @@ peft_config = LoraConfig(task_type="SEQ_2_SEQ_LM", r=config["r"],
 
 lora_model = get_peft_model(model, peft_config)
 
+# этот lr пока не используется в модели, потом будем гиперпараметры настраивать
 lr = config["lr"]
 batch_size = config["batch_size"]
 num_epochs = config["num_epochs"]
@@ -66,7 +67,7 @@ data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 training_args = TrainingArguments(
     "test-trainer", per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
-    num_train_epochs=num_epochs, evaluation_strategy="steps")
+    num_train_epochs=num_epochs, evaluation_strategy="steps", logging_steps=config["logging_steps"], logging_strategy="steps")
 
 
 trainer = Trainer(lora_model, training_args, train_dataset=tokenized_dataset["train"],
