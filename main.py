@@ -1,6 +1,9 @@
+import torch
 from transformers import DataCollatorWithPadding, TrainingArguments, Trainer, T5Tokenizer, T5ForConditionalGeneration
 from peft import get_peft_model, LoraConfig
 from datasets import load_dataset, DatasetDict
+
+from config import config
 
 dataset = load_dataset("csv", data_files="rephrased_questions.csv")
 
@@ -36,14 +39,14 @@ def tokenize_function(example):
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
 
-peft_config = LoraConfig(task_type="SEQ_2_SEQ_LM", r=1,
+peft_config = LoraConfig(task_type="SEQ_2_SEQ_LM", r=config["r"],
                          lora_alpha=32, target_modules=["q", "v"], lora_dropout=0.01)
 
 lora_model = get_peft_model(model, peft_config)
 
-lr = 3e-4
-batch_size = 1
-num_epochs = 2
+lr = config["lr"]
+batch_size = config["batch_size"]
+num_epochs = config["num_epochs"]
 
 # training_args = TrainingArguments(
 #     output_dir="/Users/grigorijnikitin/.cache/huggingface/hub/preds",
@@ -63,10 +66,25 @@ data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 training_args = TrainingArguments(
     "test-trainer", per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
-    num_train_epochs=num_epochs)
+    num_train_epochs=num_epochs, evaluation_strategy="steps")
 
 
 trainer = Trainer(lora_model, training_args, train_dataset=tokenized_dataset["train"],
                   eval_dataset=tokenized_dataset["valid"],
                   data_collator=data_collator, tokenizer=tokenizer)
 trainer.train()
+
+device = torch.device(
+    "cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+question = "What's a good song that Get ready to headbang to the ultimate mix of blues rock, punk, rock n roll, alternative, blues, Canadian, metal, rock, and hard rock in this electrifying song that's sure to leave you craving for more!.?"
+
+input_ids = tokenizer(
+    question, return_tensors="pt"
+).input_ids
+output = lora_model.generate(input_ids=input_ids.to(device))
+print(tokenizer.decode(output[0], skip_special_tokens=True))
+
+
+if input("Save model? y/n") == 'y':
+    trainer.save("models")
