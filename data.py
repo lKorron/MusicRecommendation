@@ -31,7 +31,6 @@ def tokenize_function(examples):
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
 
-print(tokenized_dataset)
 def get_tokenized_dataset():
     tokenized_dataset = dataset.map(tokenize_function, batched=True)
     print(tokenized_dataset)
