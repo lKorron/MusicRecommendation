@@ -31,10 +31,25 @@ if tokenizer.eos_token is None:
 task_prefix = "answer"
 
 
-def tokenize_function(example):
-    tokenized_data = tokenizer(
-        example["Question"], text_target=example["Answer"], truncation=True, padding='max_length', max_length=128)
-    return tokenized_data
+# def tokenize_function(example):
+#     tokenized_data = tokenizer(
+#         example["Question"], text_target=example["Answer"], truncation=True, padding='max_length', max_length=128)
+#     return tokenized_data
+
+def tokenize_function(examples):
+    input_text = ["question: " + q for q,
+                  a in zip(examples['Question'], examples['Answer'])]
+    model_inputs = tokenizer(input_text, max_length=128, truncation=True,
+                             padding="max_length", add_special_tokens=True)
+
+    labels = tokenizer(examples['Answer'], max_length=128,
+                       truncation=True, padding="max_length").input_ids
+    labels_with_ignore_index = [[(label if label != tokenizer.pad_token_id else -100)
+                                 for label in label_seq] for label_seq in labels]
+
+    model_inputs["labels"] = labels_with_ignore_index
+
+    return model_inputs
 
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
