@@ -8,7 +8,7 @@ from datasets import load_dataset, DatasetDict
 from config import config
 from inference import get_bot_response
 
-dataset = load_dataset("csv", data_files="music_bot_dataset.csv")
+dataset = load_dataset("csv", data_files="music_bot_dataset2.csv")
 
 train_test_valid = dataset['train'].train_test_split(test_size=0.2)
 test_valid = train_test_valid['test'].train_test_split(test_size=0.5)
@@ -81,7 +81,7 @@ num_epochs = 5
 
 # define training arguments
 training_args = transformers.TrainingArguments(
-    output_dir="MusicBot-ft",
+    output_dir="MusicBot-ft-2",
     learning_rate=lr,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
@@ -109,14 +109,17 @@ trainer = transformers.Trainer(
 
 model.config.use_cache = False
 
-trainer.train()
+# trainer.train()
+#
+# trainer.save_model("tuned_model")
 
-trainer.save_model("tuned_model")
-
-# model = AutoModelForCausalLM.from_pretrained("MusicBot-ft/checkpoint-250",
+# model = AutoModelForCausalLM.from_pretrained("MusicBot-ft-2/checkpoint-125",
 #                                              device_map="auto",
 #                                              trust_remote_code=False,
 #                                              revision="main")
 
 
-get_bot_response("Give me music for dreaming", model, tokenizer)
+get_bot_response("Can you recommend me a rock music", model, tokenizer)
+
+
+

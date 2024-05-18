@@ -1,0 +1,66 @@
+{
+  "best_metric": 0.8671861290931702,
+  "best_model_checkpoint": "MusicBot-ft-2\\checkpoint-75",
+  "epoch": 3.0,
+  "eval_steps": 500,
+  "global_step": 75,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "grad_norm": 1.1050245761871338,
+      "learning_rate": 0.00016260162601626016,
+      "loss": 2.7292,
+      "step": 25
+    },
+    {
+      "epoch": 1.0,
+      "eval_loss": 1.1332600116729736,
+      "eval_runtime": 19.1218,
+      "eval_samples_per_second": 20.919,
+      "eval_steps_per_second": 0.68,
+      "step": 25
+    },
+    {
+      "epoch": 2.0,
+      "grad_norm": 0.43374061584472656,
+      "learning_rate": 0.00012195121951219512,
+      "loss": 0.9839,
+      "step": 50
+    },
+    {
+      "epoch": 2.0,
+      "eval_loss": 0.9010314345359802,
+      "eval_runtime": 18.7631,
+      "eval_samples_per_second": 21.318,
+      "eval_steps_per_second": 0.693,
+      "step": 50
+    },
+    {
+      "epoch": 3.0,
+      "grad_norm": 0.3343766927719116,
+      "learning_rate": 8.130081300813008e-05,
+      "loss": 0.8859,
+      "step": 75
+    },
+    {
+      "epoch": 3.0,
+      "eval_loss": 0.8671861290931702,
+      "eval_runtime": 29.0107,
+      "eval_samples_per_second": 13.788,
+      "eval_steps_per_second": 0.448,
+      "step": 75
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 125,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 5,
+  "save_steps": 500,
+  "total_flos": 1045305106366464.0,
+  "train_batch_size": 32,
+  "trial_name": null,
+  "trial_params": null
+}

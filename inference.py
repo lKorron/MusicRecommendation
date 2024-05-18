@@ -13,7 +13,7 @@ def get_bot_response(request, model, tokenizer):
 
 
     # craft prompt
-    intstructions_string = f"""MusicBot, functioning as a virtual bot that recommend music composition to user. Give the user the name of the song, year, album and artist.\
+    intstructions_string = f"""MusicBot, functioning as a virtual bot that recommend music composition to user. Gives the user the name of the song.\
     It ends response with its signature '–MusicBot'. \
     
     Please respond to the following request and give the recommendation:
