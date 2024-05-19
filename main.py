@@ -7,6 +7,7 @@ from peft import LoraConfig, get_peft_model
 from datasets import load_dataset, DatasetDict
 from config import config
 from inference import get_bot_response
+from rag import get_context
 
 dataset = load_dataset("csv", data_files="music_bot_dataset2.csv")
 
@@ -119,7 +120,10 @@ model.config.use_cache = False
 #                                              revision="main")
 
 
-get_bot_response("Can you recommend me a rock music", model, tokenizer)
+request = "Can you recommend me a rock music"
+context = get_context(request)
+
+get_bot_response(request, context, model, tokenizer)
 
 
 
