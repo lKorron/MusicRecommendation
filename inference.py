@@ -6,7 +6,7 @@ def get_bot_response(request, context,  model, tokenizer):
     It ends response with its signature '–MusicBot'. \
 
     {context}
-    Please respond to the following request and give the recommendation.
+    Please respond to the following request and give the recommendation.  Use the data about songs from context. Do not mention that you use the context.
 
     {request}
     [/INST]
