@@ -9,16 +9,16 @@ from config import config
 from inference import get_bot_response
 from rag import get_context
 
-dataset = load_dataset("csv", data_files="music_bot_dataset2.csv")
+dataset = load_dataset("csv", data_files="tuning_dataset.csv")
 
 train_test_valid = dataset['train'].train_test_split(test_size=0.2)
-test_valid = train_test_valid['test'].train_test_split(test_size=0.5)
+# test_valid = train_test_valid['test'].train_test_split(test_size=0.5)
 
 
 dataset = DatasetDict({
     'train': train_test_valid['train'],
-    'test': test_valid['test'],
-    'valid': test_valid['train']
+    # 'test': test_valid['test'],
+    'valid': train_test_valid['test']
 })
 
 
@@ -77,12 +77,12 @@ model.print_trainable_parameters()
 
 
 lr = 2e-4
-batch_size = 32
+batch_size = 4
 num_epochs = 5
 
 # define training arguments
 training_args = transformers.TrainingArguments(
-    output_dir="MusicBot-ft-2",
+    output_dir="MusicBot-ft-3",
     learning_rate=lr,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
@@ -110,9 +110,9 @@ trainer = transformers.Trainer(
 
 model.config.use_cache = False
 
-# trainer.train()
-#
-# trainer.save_model("tuned_model")
+trainer.train()
+
+trainer.save_model("tuned_model")
 
 # model = AutoModelForCausalLM.from_pretrained("MusicBot-ft-2/checkpoint-125",
 #                                              device_map="auto",
