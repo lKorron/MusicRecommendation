@@ -57,7 +57,7 @@ model.train()
 model.gradient_checkpointing_enable()
 model = prepare_model_for_kbit_training(model)
 
-config = LoraConfig(
+lora_config = LoraConfig(
     r=config["r"],
     lora_alpha=config["lora_alpha"],
     target_modules=config["target_modules"],
@@ -66,7 +66,7 @@ config = LoraConfig(
     task_type="CAUSAL_LM"
 )
 
-model = get_peft_model(model, config)
+model = get_peft_model(model, lora_config)
 model.print_trainable_parameters()
 
 
