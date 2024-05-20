@@ -107,7 +107,7 @@ if config["is_train"]:
 
 
 if config["is_load_tuned"]:
-    model = AutoModelForCausalLM.from_pretrained("MusicBot-ft/checkpoint-125",
+    model = AutoModelForCausalLM.from_pretrained(config["model_checkpoint"],
                                                 device_map="auto",
                                                 trust_remote_code=False,
                                                 revision="main")
