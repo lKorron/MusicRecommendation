@@ -10,12 +10,12 @@ from rag import get_context
 
 dataset = load_dataset("csv", data_files="tuning_dataset.csv")
 
-train_test_valid = dataset['train'].train_test_split(test_size=0.2)
+train_test = dataset['train'].train_test_split(test_size=0.2)
 
 
 dataset = DatasetDict({
-    'train': train_test_valid['train'],
-    'valid': train_test_valid['test']
+    'train': train_test['train'],
+    'valid': train_test['test']
 })
 
 
@@ -94,7 +94,7 @@ training_args = transformers.TrainingArguments(
 trainer = transformers.Trainer(
     model=model,
     train_dataset=tokenized_dataset["train"],
-    eval_dataset=tokenized_dataset["test"],
+    eval_dataset=tokenized_dataset["valid"],
     args=training_args,
     data_collator=data_collator
 )
