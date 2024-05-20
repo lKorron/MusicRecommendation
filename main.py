@@ -1,4 +1,3 @@
-import torch
 import transformers
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -12,12 +11,10 @@ from rag import get_context
 dataset = load_dataset("csv", data_files="tuning_dataset.csv")
 
 train_test_valid = dataset['train'].train_test_split(test_size=0.2)
-# test_valid = train_test_valid['test'].train_test_split(test_size=0.5)
 
 
 dataset = DatasetDict({
     'train': train_test_valid['train'],
-    # 'test': test_valid['test'],
     'valid': train_test_valid['test']
 })
 
@@ -31,7 +28,6 @@ model = AutoModelForCausalLM.from_pretrained(model_name,
 
 tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
 
-# prepare data
 def tokenize_function(examples):
     text = examples["sample"]
 
@@ -48,7 +44,6 @@ def tokenize_function(examples):
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
 
-# pad token should be null?
 
 if tokenizer.eos_token is None:
     tokenizer.add_special_tokens({"eos_token": "</s>"})
@@ -57,17 +52,16 @@ tokenizer.pad_token = tokenizer.eos_token
 
 data_collator = transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
-#prepare model
 
 model.train()
 model.gradient_checkpointing_enable()
 model = prepare_model_for_kbit_training(model)
 
 config = LoraConfig(
-    r=8,
-    lora_alpha=32,
-    target_modules=["q_proj"],
-    lora_dropout=0.05,
+    r=config["r"],
+    lora_alpha=config["lora_alpha"],
+    target_modules=config["target_modules"],
+    lora_dropout=config["lora_dropout"],
     bias="none",
     task_type="CAUSAL_LM"
 )
@@ -76,13 +70,12 @@ model = get_peft_model(model, config)
 model.print_trainable_parameters()
 
 
-lr = 2e-4
-batch_size = 4
-num_epochs = 5
+lr = config["lr"]
+batch_size = config["batch_size"]
+num_epochs = config["num_epochs"]
 
-# define training arguments
 training_args = transformers.TrainingArguments(
-    output_dir="MusicBot-ft-3",
+    output_dir="MusicBot-ft",
     learning_rate=lr,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
@@ -98,8 +91,6 @@ training_args = transformers.TrainingArguments(
     optim="paged_adamw_8bit",
 )
 
-
-
 trainer = transformers.Trainer(
     model=model,
     train_dataset=tokenized_dataset["train"],
@@ -110,20 +101,24 @@ trainer = transformers.Trainer(
 
 model.config.use_cache = False
 
-trainer.train()
-
-trainer.save_model("tuned_model")
-
-# model = AutoModelForCausalLM.from_pretrained("MusicBot-ft-2/checkpoint-125",
-#                                              device_map="auto",
-#                                              trust_remote_code=False,
-#                                              revision="main")
+if config["is_train"]:
+    trainer.train()
+    trainer.save_model("tuned_model")
 
 
-request = "Can you recommend me a rock music"
-context = get_context(request)
+if config["is_load_tuned"]:
+    model = AutoModelForCausalLM.from_pretrained("MusicBot-ft/checkpoint-125",
+                                                device_map="auto",
+                                                trust_remote_code=False,
+                                                revision="main")
 
-get_bot_response(request, context, model, tokenizer)
+
+request = config(["request"])
+context = get_context(request, config["top_k"])
+
+response = get_bot_response(request, context, model, tokenizer)
+
+print(response)
 
 
 

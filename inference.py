@@ -15,10 +15,10 @@ def get_bot_response(request, context,  model, tokenizer):
     prompt = prompt_template(request, context)
 
     print(prompt)
-    # tokenize input
-    inputs = tokenizer(prompt, return_tensors="pt")
 
-    # generate output
+    inputs = tokenizer(prompt, return_tensors="pt")
     outputs = model.generate(input_ids=inputs["input_ids"].to("cuda"), max_new_tokens=140)
 
-    print(tokenizer.batch_decode(outputs)[0])
+    response = tokenizer.batch_decode(outputs)[0]
+
+    return response

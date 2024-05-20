@@ -4,13 +4,13 @@ from llama_index.core.retrievers import VectorIndexRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.postprocessor import SimilarityPostprocessor
 
-
+from config import config
 
 Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
 Settings.llm = None
-Settings.chunk_size = 100
-Settings.chunk_overlap = 25
+Settings.chunk_size = config["chunk_size"]
+Settings.chunk_overlap = config["chunk_overlap"]
 
 documents = SimpleDirectoryReader("rag_data").load_data()
 index = VectorStoreIndex.from_documents(documents)
@@ -23,7 +23,7 @@ def get_context(query, top_k = 3):
 
     query_engine = RetrieverQueryEngine(
         retriever=retriever,
-        node_postprocessors=[SimilarityPostprocessor(similarity_cutoff=0.5)],
+        node_postprocessors=[SimilarityPostprocessor(similarity_cutoff=config["similarity_cutoff"])],
     )
 
     response = query_engine.query(query)
