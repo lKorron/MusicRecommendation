@@ -113,7 +113,7 @@ if config["is_load_tuned"]:
                                                 revision="main")
 
 
-request = config(["request"])
+request = config["request"]
 context = get_context(request, config["top_k"])
 
 response = get_bot_response(request, context, model, tokenizer)
