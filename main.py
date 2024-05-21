@@ -8,7 +8,7 @@ from config import config
 from inference import get_bot_response
 from rag import get_context
 
-dataset = load_dataset("csv", data_files="tuning_data/tuning_dataset")
+dataset = load_dataset("csv", data_files="tuning_data/tuning_dataset.csv")
 
 train_test = dataset['train'].train_test_split(test_size=0.2)
 
