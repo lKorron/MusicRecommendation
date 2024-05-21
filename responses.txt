@@ -56,3 +56,12 @@ Don't Let Me Down, Atomic Kitten, Ladies Night, 2003, ['beautiful' 'rock' 'pop' 
     Can you recommend me a soothing music for night dreaming
     [/INST]
      I recommend the track "Triple Concerto" from the album "Pieces In A Modern Style" by William Orbit. This instrumental piece offers a lush, calming atmosphere that's perfect for nighttime dreaming. With its electronic and classical crossover elements, it creates a soothing and reverent ambiance that's both gentle and expansive. –MusicBot.</s>
+
+
+
+
+     Please respond to the following request and give the recommendation.  Use the data about songs from context. Do not mention that you use the context.
+
+    Can you recommend me the combination of slipknot and metallica
+    [/INST]
+     I'd recommend checking out "Corrupt TV" from the album "Lunatic" by Pitbulls In The Nursery (2006) – it's a fusion of industrial metal and progressive metal, and it showcases both heavy metal and alternative metal influences, much like the combination of Slipknot and Metallica in its aggressive and intricate sound. The song's industrial metal edge is reminiscent of Metallica's heavier works, while its progressive metal elements bring to mind the intricacy and complexity of Slipknot's progressive metal influences. –MusicBot.</s>

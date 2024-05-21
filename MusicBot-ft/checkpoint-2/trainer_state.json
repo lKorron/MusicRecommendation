@@ -1,0 +1,36 @@
+{
+  "best_metric": 3.314174175262451,
+  "best_model_checkpoint": "MusicBot-ft/checkpoint-2",
+  "epoch": 1.0,
+  "eval_steps": 500,
+  "global_step": 2,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "grad_norm": 2.1322076320648193,
+      "learning_rate": 0.0003,
+      "loss": 3.3408,
+      "step": 2
+    },
+    {
+      "epoch": 1.0,
+      "eval_loss": 3.314174175262451,
+      "eval_runtime": 4.3893,
+      "eval_samples_per_second": 1.823,
+      "eval_steps_per_second": 0.456,
+      "step": 2
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 24,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 12,
+  "save_steps": 500,
+  "total_flos": 8566552166400.0,
+  "train_batch_size": 4,
+  "trial_name": null,
+  "trial_params": null
+}

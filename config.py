@@ -1,14 +1,14 @@
 config = {
     # Training setup
-    "is_train": True,
+    "is_train": False,
     "lr": 3e-4,
     "batch_size": 4,
     "num_epochs": 10,
     "logging_steps": 50,
     # Inference setup
-    "request": "Can you recommend me a rock music",
-    "is_load_tuned": False,
-    "model_checkpoint": "MusicBot-ft/checkpoint-20",
+    "request": "Can you recommend me the combination of slipknot and metallica",
+    "is_load_tuned": True,
+    "model_checkpoint": "MusicBot-ft/checkpoint-24",
     # LoRa settings
     "r": 8,
     "lora_alpha": 32,
