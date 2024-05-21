@@ -48,3 +48,11 @@ Don't Let Me Down, Atomic Kitten, Ladies Night, 2003, ['beautiful' 'rock' 'pop' 
     Can you recommend me a pop music
     [/INST]
     Absolutely! Based on the context of the songs you've provided, I'd recommend you give a listen to "Let Me Be Yours" by Five Star. This catchy and upbeat pop single is sure to put a smile on your face and get you dancing with its infectious melody and unforgettable chorus. –MusicBot</s>
+
+
+
+    Please respond to the following request and give the recommendation.  Use the data about songs from context. Do not mention that you use the context.
+
+    Can you recommend me a soothing music for night dreaming
+    [/INST]
+     I recommend the track "Triple Concerto" from the album "Pieces In A Modern Style" by William Orbit. This instrumental piece offers a lush, calming atmosphere that's perfect for nighttime dreaming. With its electronic and classical crossover elements, it creates a soothing and reverent ambiance that's both gentle and expansive. –MusicBot.</s>

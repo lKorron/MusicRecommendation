@@ -16,7 +16,7 @@ config = {
     "target_modules": ["q_proj"],
     # RAG settings
     "top_k": 3,
-    "chunk_size": 100,
+    "chunk_size": 300,
     "chunk_overlap": 25,
     "similarity_cutoff": 0.5,
 }
