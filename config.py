@@ -15,7 +15,7 @@ config = {
     "lora_dropout": 0.05,
     "target_modules": ["q_proj"],
     # RAG settings
-    "top_k": 3,
+    "top_k": 1,
     "chunk_size": 300,
     "chunk_overlap": 25,
     "similarity_cutoff": 0.5,
